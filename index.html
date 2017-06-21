@@ -6,33 +6,44 @@
 </head>
 <body>
     <main id="app"></main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.0/babel.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
-    <script>
+    <script type="text/babel">
         function Hola (props) {
             const name = props.name;
 
-            return React.DOM.h1({
+            return (
+                <h1 id="Title">
+                    Hola {name}
+                </h1>
+            )
+            // This way is use to create manualy a react component
+            /*return React.DOM.h1({
                 id: 'Title'
-            }, `Hola ${name}`);
+            }, `Hola ${name}`);*/
         }
 
-        const hola = React.createElement(Hola, {
+        // This way is use to create manualy a react component
+        /*const hola = React.createElement(Hola, {
             name: 'Platzi'
-        });
+        });*/
 
         ReactDOM.render(
-            hola,
+            //hola
+            <Hola name="Platzi" />,
             document.getElementById('app')
         )
 
         setTimeout (
             () => {
                 ReactDOM.render(
-                    React.createElement(Hola, {name: 'Adrian'}),
+                    // This way is use to create manualy a react component
+                    //React.createElement(Hola, {name: 'Adrian'}),
+                     <Hola name="Adrian" />,
                     document.getElementById('app')
                 )
-            } , 1000
+            } , 2000
         )
     </script>
 </body>
