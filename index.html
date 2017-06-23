@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
     <script type="text/babel">
-        function Hola (props) {
+        /* function Hola (props) {
             const name = props.name;
 
             return (
@@ -19,10 +19,103 @@
                 </h1>
             )
             // This way is use to create manualy a react component
-            /*return React.DOM.h1({
-                id: 'Title'
-            }, `Hola ${name}`);*/
+            //return React.DOM.h1({
+              //  id: 'Title'
+            //}, `Hola ${name}`);
+        } */
+
+        function Hola (props) {
+            return (
+        <h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
+                    Hola {props.name} {props.count}
+                </h1>
+            )
         }
+
+        class MiComponente extends React.Component {
+            constructor (props) {
+                super(props);
+
+                this.state = {
+                    count: 0,
+                }
+
+                this.handleClick = this.handleClick.bind(this);
+            }
+
+            componentWillMount () {
+                console.log('El componente se va a montar');
+            }
+
+            componentDidMount () {
+                document.addEventListener('click', this.handleClick)
+            }
+
+            /* componentWillReceiveProps (nextProps) {
+                this.setState ({
+                  count: this.state.count * 2  
+                })
+            } */
+
+            shouldComponentUpdate (nextProps, nextState) {
+               if (nextState.count !== this.state.count)   return true;
+               return false;
+            }
+
+            componentWillUpdate () {
+                console.log('el componente se va a actualizar');
+            }
+
+            componentDidUpdate () {
+                console.log('el componente se actualizó');
+            }
+
+            componentWillUnmount () {
+                document.removeEventListener('click', this.handleClick)
+            }
+            
+            handleClick () {
+                this.setState({
+                    count: this.state.count + 1
+                })
+            }
+
+            handleMouseEnter (event) {
+                console.log(event)
+            }
+
+            render () {
+                const name = this.props.name;
+                return (
+                    <Hola 
+                        name={this.props.name}
+                        count={this.state.count}
+                        onClick={this.handleClick}
+                        onMouseEnter={this.handleMouseEnter} />
+                )
+            }
+        }
+
+        const OtroComponent = React.createClass({
+            getInitialState () {
+                return {
+                    count: 0,
+                };
+            },
+            handleClick () {
+                this.setState({
+                    count: this.state.count + 1
+                })
+            },
+            render () {
+                const name = this.props.name;
+                return (
+                <h1 id="Title" onClick={this.handleClick}>
+                    Hola {name} {this.state.count}
+                </h1>
+                )
+            }
+        })
 
         // This way is use to create manualy a react component
         /*const hola = React.createElement(Hola, {
@@ -31,20 +124,23 @@
 
         ReactDOM.render(
             //hola
-            <Hola name="Platzi" />,
+            //<Hola name="Platzi" />,
+            <MiComponente name="Adriancito" />,
+            //<OtroComponent name="Adriancito" />,
             document.getElementById('app')
         )
 
-        setTimeout (
+        /*setTimeout (
             () => {
                 ReactDOM.render(
                     // This way is use to create manualy a react component
                     //React.createElement(Hola, {name: 'Adrian'}),
-                     <Hola name="Adrian" />,
+                     //<Hola name="Adrian" />,
+                     <MiComponente name="Adrian" />,
                     document.getElementById('app')
                 )
             } , 2000
-        )
+        )*/
     </script>
 </body>
 </html>
