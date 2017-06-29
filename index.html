@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.js"></script>
     <script type="text/babel">
-        /* function Hola (props) {
+        /* function Hola (props, context) {
             const name = props.name;
 
             return (
@@ -24,12 +24,17 @@
             //}, `Hola ${name}`);
         } */
 
-        function Hola (props) {
+        function Hola (props, context) {
+            console.log(context);
             return (
         <h1 id="Title" onClick={props.onClick} onMouseEnter={props.onMouseEnter}>
-                    Hola {props.name} {props.count}
+                    Hola {props.name} {context.count}
                 </h1>
             )
+        }
+
+        Hola.contextTypes = {
+            count: React.PropTypes.number
         }
 
         class MiComponente extends React.Component {
@@ -41,6 +46,12 @@
                 }
 
                 this.handleClick = this.handleClick.bind(this);
+            }
+
+            getChildContext () {
+                return {
+                    count: this.state.count,
+                }
             }
 
             componentWillMount () {
@@ -121,6 +132,10 @@
         /*const hola = React.createElement(Hola, {
             name: 'Platzi'
         });*/
+
+        MiComponente.childContextTypes = {
+            count: React.PropTypes.number,
+        }
 
         ReactDOM.render(
             //hola
